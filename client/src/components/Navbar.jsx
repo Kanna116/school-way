@@ -11,6 +11,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 
+import { useNavigate } from "react-router-dom";
 import Logo from "./Logo";
 import { useState } from "react";
 
@@ -18,6 +19,7 @@ const pages = ["Track", "Bookings"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function Navbar() {
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -36,8 +38,14 @@ function Navbar() {
     setAnchorElUser(null);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   return (
-    <AppBar position="static" sx={{ bgcolor: "black" }}>
+    <AppBar position="static" sx={{ bgcolor: "white" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Logo />
@@ -153,6 +161,9 @@ function Navbar() {
                   </Typography>
                 </MenuItem>
               ))}
+              <MenuItem onClick={handleLogout}>
+                <Typography sx={{ textAlign: "center" }}>Log out</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

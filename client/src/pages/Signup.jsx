@@ -15,6 +15,7 @@ import {
 
 const Signup = () => {
   const [formData, setFormData] = useState({
+    username: "",
     email: "",
     password: "",
     role: "",
@@ -45,6 +46,15 @@ const Signup = () => {
         <h2>Create an Account</h2>
         {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleSubmit} className="auth-form">
+          <TextField
+            name="username"
+            required
+            id="outlined-required"
+            label="Username"
+            onChange={handleChange}
+            value={formData.username}
+            size="small"
+          />
           <TextField
             type="email"
             name="email"
