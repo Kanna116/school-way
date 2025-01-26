@@ -1,8 +1,17 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Logo from "../components/Logo";
 import axios from "axios";
 import "../styles/Signup.css";
 import "../styles/Auth.css";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -32,38 +41,49 @@ const Signup = () => {
   return (
     <div className="auth-wrapper">
       <div className="auth-card">
-        <div className="auth-logo">School Way</div>
+        <Logo />
         <h2>Create an Account</h2>
         {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleSubmit} className="auth-form">
-          <input
+          <TextField
             type="email"
             name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
             required
+            id="outlined-required"
+            label="Email"
+            onChange={handleChange}
+            value={formData.email}
+            size="small"
           />
-          <input
+          <TextField
             type="password"
             name="password"
-            placeholder="Password"
+            id="outlined-required"
+            label="Password"
             value={formData.password}
             onChange={handleChange}
+            size="small"
             required
           />
-          <select
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select Role</option>
-            <option value="rider">Rider</option>
-            <option value="parent">Parent</option>
-            <option value="student">Student</option>
-          </select>
-          <button type="submit">Sign Up</button>
+          <FormControl size="small">
+            <InputLabel id="role-select-label">Role</InputLabel>
+            <Select
+              fullWidth
+              labelId="demo-select-small-label"
+              id="demo-select-small"
+              value={formData.role}
+              label="Role"
+              name="role"
+              variant="outlined"
+              onChange={handleChange}
+            >
+              <MenuItem value="user">User</MenuItem>
+              <MenuItem value="rider">Rider</MenuItem>
+            </Select>
+          </FormControl>
+          <Button variant="contained" type="submit">
+            Signup
+          </Button>
         </form>
         <p className="auth-switch">
           Already have an account? <a href="/login">Log in</a>

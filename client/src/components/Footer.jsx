@@ -1,67 +1,95 @@
+import { Box, Link, Typography } from "@mui/material";
+import Logo from "./Logo";
+
 const Footer = () => {
-  const footerStyle = {
-    backgroundColor: "#333",
-    color: "#fff",
-    padding: "20px 0",
-    textAlign: "center",
-  };
-
-  const containerStyle = {
-    maxWidth: "1200px",
-    margin: "0 auto",
-    padding: "0 20px",
-  };
-
-  const linkStyle = {
-    color: "#fff",
-    marginRight: "20px",
-  };
-
-  const socialLinkStyle = {
-    color: "#fff",
-    marginRight: "10px",
-  };
-
   return (
-    <footer style={footerStyle}>
-      <div style={containerStyle}>
-        <p>&copy; 2025 SchoolWay. All rights reserved.</p>
-        <div>
-          <a href="/privacy-policy" style={linkStyle}>
-            Privacy Policy
-          </a>
-          <a href="/terms-of-service" style={linkStyle}>
-            Terms of Service
-          </a>
-        </div>
-        <div style={{ marginTop: "10px" }}>
-          <a
-            href="https://facebook.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={socialLinkStyle}
+    <Box
+      sx={{
+        backgroundColor: "#000",
+        color: "#fff",
+        padding: "20px",
+        height: "200px",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: 3,
+          textAlign: "center",
+        }}
+      >
+        {/* About Section */}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            maxWidth: "300px",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Logo />
+          <Typography
+            variant="body2"
+            sx={{
+              mt: 2,
+            }}
           >
-            Facebook
-          </a>
-          <a
-            href="https://twitter.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={socialLinkStyle}
-          >
-            Twitter
-          </a>
-          <a
-            href="https://instagram.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={socialLinkStyle}
-          >
-            Instagram
-          </a>
-        </div>
-      </div>
-    </footer>
+            Providing safe and reliable school transportation for students.
+            Reliable, on-time service for your peace of mind.
+          </Typography>
+        </Box>
+
+        {/* Quick Links Section */}
+        <Box sx={{ flex: "1 1 30%", minWidth: "200px" }}>
+          <Typography variant="h6" gutterBottom>
+            Quick Links
+          </Typography>
+          <Box>
+            <Link href="/about" color="inherit" variant="body2" display="block">
+              About Us
+            </Link>
+            <Link
+              href="/services"
+              color="inherit"
+              variant="body2"
+              display="block"
+            >
+              Services
+            </Link>
+            <Link
+              href="/contact"
+              color="inherit"
+              variant="body2"
+              display="block"
+            >
+              Contact
+            </Link>
+          </Box>
+        </Box>
+
+        {/* Contact Section */}
+        <Box sx={{ flex: "1 1 30%", minWidth: "200px" }}>
+          <Typography variant="h6" gutterBottom>
+            Contact Us
+          </Typography>
+          <Typography variant="body2">
+            <strong>Email:</strong> info@schoolway.com
+          </Typography>
+          <Typography variant="body2">
+            <strong>Phone:</strong> (123) 456-7890
+          </Typography>
+        </Box>
+      </Box>
+
+      <Box sx={{ textAlign: "center", marginTop: "20px", fontSize: "14px" }}>
+        <Typography variant="body2" color="inherit">
+          © {new Date().getFullYear()} Schoolway. All rights reserved.
+        </Typography>
+      </Box>
+    </Box>
   );
 };
 

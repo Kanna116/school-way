@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import HeroSection from "../components/HeroSection";
 import Navbar from "../components/Navbar";
 import ParentHomePage from "./ParentHomePage";
+import { Box } from "@mui/material";
 
 const HomePage = () => {
   const [userRole, setUserRole] = useState(null); // This will store the user's role (parent/driver)
@@ -17,13 +18,20 @@ const HomePage = () => {
   return (
     <div>
       <Navbar />
-      {userRole === "parent" ? (
-        <ParentHomePage />
-      ) : userRole === "driver" ? (
-        <DriverHomePage />
-      ) : (
-        <HeroSection />
-      )}
+      <Box
+        sx={{
+          width: "100%",
+          minHeight: "calc(100vh - 270px)",
+        }}
+      >
+        {userRole === "user" ? (
+          <ParentHomePage />
+        ) : userRole === "driver" ? (
+          <DriverHomePage />
+        ) : (
+          <HeroSection />
+        )}
+      </Box>
       <Footer />
     </div>
   );

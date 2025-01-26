@@ -1,84 +1,163 @@
-import { useNavigate } from "react-router-dom";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
 
-const Navbar = () => {
-  const headerStyle = {
-    backgroundColor: "#333",
-    padding: "10px 0",
+import Logo from "./Logo";
+import { useState } from "react";
+
+const pages = ["Track", "Bookings"];
+const settings = ["Profile", "Account", "Dashboard", "Logout"];
+
+function Navbar() {
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
   };
 
-  const navStyle = {
-    maxWidth: "1200px",
-    margin: "0 auto",
-    padding: "0 20px",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
   };
 
-  const logoStyle = {
-    fontSize: "1.5rem",
-    color: "#fff",
-    textDecoration: "none",
-    fontWeight: "bold",
-  };
-
-  const ulStyle = {
-    listStyleType: "none",
-    margin: "0",
-    padding: "0",
-    display: "flex",
-    gap: "20px",
-  };
-
-  const linkStyle = {
-    color: "#fff",
-    textDecoration: "none",
-    fontSize: "1rem",
-  };
-
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem("userRole");
-    localStorage.removeItem("token");
-    navigate("/login");
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
   };
 
   return (
-    <header style={headerStyle}>
-      <nav style={navStyle}>
-        <a href="/" style={logoStyle}>
-          SchoolWay
-        </a>
+    <AppBar position="static" sx={{ bgcolor: "black" }}>
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <Logo />
 
-        <ul style={ulStyle}>
-          <li>
-            <a href="/" style={linkStyle}>
-              Home
-            </a>
-          </li>
-          <li>
-            <a href="/about" style={linkStyle}>
-              About
-            </a>
-          </li>
-          <li>
-            <a href="/services" style={linkStyle}>
-              Services
-            </a>
-          </li>
-          <li>
-            <a href="/contact" style={linkStyle}>
-              Contact
-            </a>
-          </li>
-        </ul>
-        <div>
-          <button onClick={handleLogout}>Log out</button>
-        </div>
-      </nav>
-    </header>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: {
+                xs: "flex",
+                md: "none",
+                justifyContent: "center",
+              },
+            }}
+          >
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{ display: { xs: "block", md: "none" } }}
+            >
+              {pages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography sx={{ textAlign: "center" }}>{page}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href="#app-bar-with-responsive-menu"
+            sx={{
+              mr: 2,
+              display: { xs: "flex", md: "none" },
+              flexGrow: 1,
+              fontFamily: "monospace",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            SchoolWay
+          </Typography>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: {
+                xs: "none",
+                md: "flex",
+                justifyContent: "center",
+                gap: "10px",
+              },
+            }}
+          >
+            {pages.map((page) => (
+              <Button
+                key={page}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: "white", display: "block" }}
+              >
+                {page}
+              </Button>
+            ))}
+          </Box>
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: "45px" }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography sx={{ textAlign: "center" }}>
+                    {setting}
+                  </Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
-};
-
+}
 export default Navbar;
