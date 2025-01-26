@@ -15,5 +15,4 @@ const RiderSchema = new mongoose.Schema({
   },
 });
 
-const Rider = mongoose.model("Rider", RiderSchema);
-module.exports = Rider;
+module.exports = mongoose.model("Rider", RiderSchema);

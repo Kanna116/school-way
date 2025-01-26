@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Loader from "./components/Loader";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
@@ -13,18 +13,20 @@ const Test = React.lazy(() => import("./pages/Test"));
 const App = () => {
   return (
     <Suspense fallback={<Loader />}>
-      <Routes>
-        <Route path="/" element={<PublicRoute component={NormalHome} />} />
-        {/* Public Routes */}
-        <Route path="/login" element={<PublicRoute component={Login} />} />
-        <Route path="/signup" element={<PublicRoute component={Signup} />} />
+      <Router>
+        <Routes>
+          <Route path="/" element={<PublicRoute component={NormalHome} />} />
+          {/* Public Routes */}
+          <Route path="/login" element={<PublicRoute component={Login} />} />
+          <Route path="/signup" element={<PublicRoute component={Signup} />} />
 
-        {/* Protected Routes */}
-        <Route path="/home" element={<ProtectedRoute component={Home} />} />
+          {/* Protected Routes */}
+          <Route path="/home" element={<ProtectedRoute component={Home} />} />
 
-        {/* Default Route */}
-        <Route path="*" element={<ProtectedRoute component={Test} />} />
-      </Routes>
+          {/* Default Route */}
+          <Route path="*" element={<ProtectedRoute component={Test} />} />
+        </Routes>
+      </Router>
     </Suspense>
   );
 };

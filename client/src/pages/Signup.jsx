@@ -1,9 +1,3 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Logo from "../components/Logo";
-import axios from "axios";
-import "../styles/Signup.css";
-import "../styles/Auth.css";
 import {
   Button,
   FormControl,
@@ -12,6 +6,12 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Logo from "../components/Logo";
+import BASE_API from "../services/axios";
+import "../styles/Auth.css";
+import "../styles/Signup.css";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -32,7 +32,7 @@ const Signup = () => {
     setError("");
 
     try {
-      await axios.post("/api/auth/signup", formData);
+      await BASE_API.post("/api/auth/signup", formData);
       navigate("/login");
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong");

@@ -1,5 +1,5 @@
-import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
+import BASE_API from "../services/axios";
 
 const UserContext = createContext();
 
@@ -30,7 +30,7 @@ export const UserProvider = ({ children }) => {
   // Function to log the user in
   const login = async (userData) => {
     try {
-      const res = await axios.post("/api/auth/login", userData);
+      const res = await BASE_API.post("/api/auth/login", userData);
       setUser(userData);
       setIsUserLoggedIn(true);
       localStorage.setItem("user", JSON.stringify(res.data.user)); // Store user data in localStorage

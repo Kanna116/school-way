@@ -1,6 +1,6 @@
 import { Box, Button, FormControl, TextField } from "@mui/material";
-import axios from "axios";
 import { useState } from "react";
+import BASE_API from "../services/axios";
 
 // eslint-disable-next-line react/prop-types
 const RiderFinder = ({ setRiders }) => {
@@ -9,7 +9,7 @@ const RiderFinder = ({ setRiders }) => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get(
+      const response = await BASE_API.get(
         `/api/riders/riders?school=${school}&location=${location}`
       );
       setRiders(response.data.riders);
