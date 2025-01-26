@@ -1,18 +1,29 @@
-import { Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import React, { Suspense } from "react";
+import { Route, Routes } from "react-router-dom";
+import Loader from "./components/Loader";
 
-function App() {
+// Lazy load pages
+const Login = React.lazy(() => import("./pages/Login"));
+const Signup = React.lazy(() => import("./pages/Signup"));
+const Home = React.lazy(() => import("./pages/Home"));
+const Test = React.lazy(() => import("./pages/Test"));
+
+const App = () => {
   return (
-    <div>
+    <Suspense fallback={<Loader />}>
       <Routes>
-        <Route path="/" element={<h1>Welcome to the App</h1>} />
-        <Route path="/home" element={<h1>Welcome to the Home</h1>} />
+        {/* Public Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+
+        {/* Protected Routes */}
+        <Route path="/home" element={<Home />} />
+
+        {/* Default Route */}
+        <Route path="*" element={<Test />} />
       </Routes>
-    </div>
+    </Suspense>
   );
-}
+};
 
 export default App;
