@@ -1,20 +1,11 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../context/user";
 
 // eslint-disable-next-line react/prop-types
 const PublicRoute = ({ component: Component }) => {
-  const navigate = useNavigate();
-  const isAuthenticated = useAuth();
+  const { isUserLoggedIn } = useAuth();
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/home");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return <Component />;
+  return isUserLoggedIn ? <Navigate to="/home" /> : <Component />;
 };
 
 export default PublicRoute;

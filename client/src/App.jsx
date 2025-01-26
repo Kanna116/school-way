@@ -1,7 +1,8 @@
 import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import Loader from "./components/Loader";
-
+import ProtectedRoute from "./components/ProtectedRoute";
+import PublicRoute from "./components/PublicRoute";
 // Lazy load pages
 const Login = React.lazy(() => import("./pages/Login"));
 const Signup = React.lazy(() => import("./pages/Signup"));
@@ -13,16 +14,16 @@ const App = () => {
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
-        <Route path="/" element={<NormalHome />} />
+        <Route path="/" element={<PublicRoute component={NormalHome} />} />
         {/* Public Routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<PublicRoute component={Login} />} />
+        <Route path="/signup" element={<PublicRoute component={Signup} />} />
 
         {/* Protected Routes */}
-        <Route path="/home" element={<Home />} />
+        <Route path="/home" element={<ProtectedRoute component={Home} />} />
 
         {/* Default Route */}
-        <Route path="*" element={<Test />} />
+        <Route path="*" element={<ProtectedRoute component={Test} />} />
       </Routes>
     </Suspense>
   );

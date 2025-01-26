@@ -26,14 +26,14 @@
 
 
 .auth-form button {
-    background-color: #007bff;
+    background-color: #e89f40;
     color: white;
     cursor: pointer;
     border: none;
 }
 
 .auth-form button:hover {
-    background-color: #0056b3;
+    background-color: #e49022;
 }
 
 .auth-switch {
