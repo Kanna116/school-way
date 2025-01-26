@@ -1,16 +1,17 @@
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { Box, Button } from "@mui/material";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Logo from "../components/Logo";
+import { useAuth } from "../context/user";
 import "../styles/Auth.css";
 import "../styles/Login.css";
-import Logo from "../components/Logo";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -22,9 +23,7 @@ const Login = () => {
     setError("");
 
     try {
-      const res = await axios.post("/api/auth/login", formData);
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("userRole", res.data.role);
+      await login(formData);
       navigate("/home");
     } catch (err) {
       setError(err.response?.data?.message || "Invalid credentials");

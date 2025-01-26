@@ -14,12 +14,14 @@ import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import Logo from "./Logo";
 import { useState } from "react";
+import { useAuth } from "../context/user";
 
 const pages = ["Track", "Bookings"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Profile"];
 
 function Navbar() {
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -39,8 +41,7 @@ function Navbar() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("userRole");
-    localStorage.removeItem("token");
+    logout();
     navigate("/login");
   };
 
@@ -135,7 +136,7 @@ function Navbar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt={user.username} src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
             <Menu

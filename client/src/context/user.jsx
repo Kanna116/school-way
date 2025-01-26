@@ -1,0 +1,57 @@
+import axios from "axios";
+import { createContext, useContext, useEffect, useState } from "react";
+
+const UserContext = createContext();
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const useAuth = () => {
+  const context = useContext(UserContext);
+
+  if (!context) {
+    throw new Error("useAuth must be used within a UserProvider");
+  }
+
+  return context;
+};
+
+// eslint-disable-next-line react/prop-types
+export const UserProvider = ({ children }) => {
+  const [user, setUser] = useState(null); // To store user data
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false); // To track login status
+
+  useEffect(() => {
+    const savedUser = JSON.parse(localStorage.getItem("user"));
+    if (savedUser) {
+      setUser(savedUser);
+      setIsUserLoggedIn(true);
+    }
+  }, []);
+
+  // Function to log the user in
+  const login = async (userData) => {
+    try {
+      const res = await axios.post("/api/auth/login", userData);
+      setUser(userData);
+      setIsUserLoggedIn(true);
+      localStorage.setItem("user", JSON.stringify(res.data.user)); // Store user data in localStorage
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("userRole", res.data.role);
+    } catch (err) {
+      throw new Error(err.response?.data?.message || "Invalid credentials");
+    }
+  };
+
+  const logout = () => {
+    setUser(null);
+    setIsUserLoggedIn(false);
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("userRole");
+  };
+
+  return (
+    <UserContext.Provider value={{ user, isUserLoggedIn, login, logout }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
