@@ -1,16 +1,14 @@
-import { Box } from "@mui/material";
+import { Avatar, Box, Card, Chip, Typography } from "@mui/material";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import RiderFinder from "../components/RiderFinder";
+import { useAuth } from "../context/user";
+import DriverHomePage from "./DriverHomePage";
+import { useState } from "react";
 
 const HomePage = () => {
-  // const [userRole, setUserRole] = useState(null); // This will store the user's role (parent/driver)
-
-  // useEffect(() => {
-  //   // Retrieve the logged-in user's role (this could be from local storage, context, or API call)
-  //   const role = localStorage.getItem("userRole"); // Example: Assuming userRole is saved in localStorage
-  //   setUserRole(role);
-  // }, []);
+  const [riders, setRiders] = useState([]);
+  const { user } = useAuth();
 
   return (
     <div>
@@ -21,14 +19,61 @@ const HomePage = () => {
           minHeight: "calc(100vh - 270px)",
         }}
       >
-        <RiderFinder />
-        {/* {userRole === "user" ? (
-          <ParentHomePage />
-        ) : userRole === "driver" ? (
+        {user?.role === "rider" ? (
           <DriverHomePage />
         ) : (
-          <HeroSection />
-        )} */}
+          <Box
+            sx={{
+              display: "flex",
+            }}
+          >
+            <RiderFinder setRiders={setRiders} />
+            <Box sx={{ width: "50%", p: 3, height: "fit-content" }}>
+              {riders.map((rider, index) => (
+                <Card
+                  key={index}
+                  sx={{
+                    display: "flex",
+                    width: "100%",
+                    padding: 2,
+                    borderRadius: 2,
+                    boxShadow: 3,
+                  }}
+                >
+                  <Avatar
+                    sx={{ width: 56, height: 56, marginRight: 2 }}
+                    alt={rider.username}
+                    src={rider.image}
+                  />
+                  <Box>
+                    <Typography variant="h6" gutterBottom>
+                      {rider.username}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Locations: {rider.locationsCovered.join(", ")}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Schools: {rider.possibleSchools.join(", ")}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Price: $15
+                    </Typography>
+                    <Chip
+                      label="Active"
+                      color="success"
+                      sx={{ marginTop: 1 }}
+                    />
+                    <Chip
+                      label="Verified"
+                      color="info"
+                      sx={{ marginTop: 1, marginLeft: 2 }}
+                    />
+                  </Box>
+                </Card>
+              ))}
+            </Box>
+          </Box>
+        )}
       </Box>
       <Footer />
     </div>
