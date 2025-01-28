@@ -1,10 +1,11 @@
-import { Avatar, Box, Card, Chip, Typography } from "@mui/material";
+import { Box, CardMedia } from "@mui/material";
+import { useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import RiderFinder from "../components/RiderFinder";
+import RidersList from "../components/RidersList";
 import { useAuth } from "../context/user";
 import DriverHomePage from "./DriverHomePage";
-import { useState } from "react";
 
 const HomePage = () => {
   const [riders, setRiders] = useState([]);
@@ -28,50 +29,23 @@ const HomePage = () => {
             }}
           >
             <RiderFinder setRiders={setRiders} />
-            <Box sx={{ width: "50%", p: 3, height: "fit-content" }}>
-              {riders.map((rider, index) => (
-                <Card
-                  key={index}
+            {riders.length > 0 ? (
+              <RidersList riders={riders} />
+            ) : (
+              <div style={{ width: "50%" }}>
+                <CardMedia
+                  component="img"
+                  height="100%"
+                  width="100%"
                   sx={{
-                    display: "flex",
-                    width: "100%",
-                    padding: 2,
-                    borderRadius: 2,
-                    boxShadow: 3,
+                    objectFit: "contain",
+                    objectPosition: "center",
                   }}
-                >
-                  <Avatar
-                    sx={{ width: 56, height: 56, marginRight: 2 }}
-                    alt={rider.username}
-                    src={rider.image}
-                  />
-                  <Box>
-                    <Typography variant="h6" gutterBottom>
-                      {rider.username}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Locations: {rider.locationsCovered.join(", ")}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Schools: {rider.possibleSchools.join(", ")}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Price: $15
-                    </Typography>
-                    <Chip
-                      label="Active"
-                      color="success"
-                      sx={{ marginTop: 1 }}
-                    />
-                    <Chip
-                      label="Verified"
-                      color="info"
-                      sx={{ marginTop: 1, marginLeft: 2 }}
-                    />
-                  </Box>
-                </Card>
-              ))}
-            </Box>
+                  image="https://images.pexels.com/photos/13472774/pexels-photo-13472774.jpeg"
+                  alt="Safe Transportation"
+                />
+              </div>
+            )}
           </Box>
         )}
       </Box>

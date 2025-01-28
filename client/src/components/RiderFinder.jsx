@@ -6,13 +6,26 @@ import BASE_API from "../services/axios";
 const RiderFinder = ({ setRiders }) => {
   const [school, setSchool] = useState("");
   const [location, setLocation] = useState("");
+  const [ridersNotFound, setRidersNotFound] = useState(false);
 
   const handleSearch = async () => {
+    if (!school || !location) {
+      alert("Please enter both School and Location");
+      return;
+    }
+
     try {
       const response = await BASE_API.get(
         `/api/riders/riders?school=${school}&location=${location}`
       );
+      console.log(response);
+      console.log(response.status);
+      if (response.status === 404) {
+        setRidersNotFound(true);
+        return ;
+      }
       setRiders(response.data.riders);
+      setRidersNotFound(false);
     } catch (error) {
       console.error("Error fetching riders", error);
     }
@@ -61,6 +74,7 @@ const RiderFinder = ({ setRiders }) => {
           Find Rider
         </Button>
       </FormControl>
+      {ridersNotFound && "No Rider found for this route"}
     </Box>
   );
 };
