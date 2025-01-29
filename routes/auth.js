@@ -41,6 +41,8 @@ router.post("/signup", async (req, res) => {
     // If the role is "rider", create rider-specific data
     if (role === "rider") {
       const newRiderData = new Rider({
+        email,
+        password,
         username, // Associate rider data with the username
         contact: "", // Placeholder for contact (could be updated later)
         vehicleNumber: "", // Placeholder for vehicle number (could be updated later)
@@ -117,6 +119,7 @@ router.post("/login", async (req, res) => {
 
     // Step 5: Prepare the response with user data and rider data (if available)
     const responseUser = {
+      image: user.image,
       username: user.username,
       email: user.email,
       role: user.role,

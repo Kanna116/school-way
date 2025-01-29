@@ -6,7 +6,10 @@ const RiderSchema = new mongoose.Schema({
   password: String,
   possibleSchools: [String],
   locationsCovered: [String],
-  isVerified: Boolean,
+  isVerified: {
+    type: Boolean,
+    default: true,
+  },
   contact: String,
   vehicleNumber: String,
   image: {

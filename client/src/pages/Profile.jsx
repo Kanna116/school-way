@@ -272,7 +272,7 @@ const Profile = () => {
           <Card>
             <Box display="flex" alignItems="center" p={2}>
               <Avatar
-                src={user.image}
+                src={user.role === 'rider' ? user.riderData.image:user.image}
                 alt={user.username}
                 sx={{ width: 100, height: 100, marginRight: 2 }}
               />

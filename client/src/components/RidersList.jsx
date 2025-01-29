@@ -3,16 +3,27 @@ import { Avatar, Box, Card, Chip, Typography } from "@mui/material";
 
 const RidersList = ({ riders }) => {
   return (
-    <Box sx={{ width: "50%", p: 3, height: "fit-content" }}>
+    <Box
+      sx={{
+        width: "50%",
+        // p: 3,
+        height: "fit-content",
+        gap: "10px",
+        display: "flex",
+        // flexDirection: "column",
+        flexWrap: "wrap",
+      }}
+    >
       {riders.map((rider, index) => (
         <Card
           key={index}
           sx={{
             display: "flex",
-            width: "100%",
+            width: "45%",
             padding: 2,
             borderRadius: 2,
             boxShadow: 3,
+            flexDirection: "column",
           }}
         >
           <Avatar

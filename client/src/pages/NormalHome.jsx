@@ -1,4 +1,5 @@
 import {
+  AppBar,
   Avatar,
   Box,
   Button,
@@ -10,8 +11,9 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
+import Footer from "../components/Footer";
+import Logo from "../components/Logo";
 
 const HeroSection = styled(Box)(() => ({
   display: "flex",
@@ -40,6 +42,57 @@ const TestimonialCard = styled(Card)(({ theme }) => ({
 const Home = () => {
   return (
     <>
+      <AppBar
+        position="fixed"
+        sx={{
+          padding: "5px 30px",
+          bgcolor: "transparent",
+          boxShadow: "none",
+        }}
+      >
+        <Container maxWidth="xl" sx={{ display: "flex" }}>
+          <Logo />
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: {
+                xs: "none",
+                md: "flex",
+                justifyContent: "flex-end",
+                gap: "10px",
+              },
+            }}
+          >
+            <Link to="/signup">
+              <Button
+                variant="contained"
+                size="small"
+                style={{
+                  border: "2px solid #e89f40",
+                  backgroundColor: "#e89f4050",
+                  color: "#fff",
+                  marginTop: "16px",
+                }}
+              >
+                Sign up
+              </Button>
+            </Link>
+            <Link to="/login">
+              <Button
+                variant="contained"
+                size="small"
+                style={{
+                  color: "#fff",
+                  backgroundColor: "#e89f40",
+                  marginTop: "16px",
+                }}
+              >
+                Log in
+              </Button>
+            </Link>
+          </Box>
+        </Container>
+      </AppBar>
       {/* Hero Section */}
       <HeroSection>
         <Container maxWidth="md">
@@ -58,7 +111,6 @@ const Home = () => {
               style={{
                 backgroundColor: "#fff",
                 color: "#e89f40",
-                marginTop: "16px",
               }}
             >
               Get Started

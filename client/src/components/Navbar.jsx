@@ -45,7 +45,15 @@ function Navbar() {
   };
 
   return (
-    <AppBar position="static" sx={{ bgcolor: "white" }}>
+    <AppBar
+      position="sticky"
+      sx={{
+        bgcolor: "white",
+        boxShadow: "none",
+        borderBottom: "1px solid #000",
+        zIndex: "100",
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Logo />

@@ -16,5 +16,6 @@ button {
 
 
 .protected-page {
-    padding: 20px;
+    padding: 10px;
+    min-height: 80vh;
 }
