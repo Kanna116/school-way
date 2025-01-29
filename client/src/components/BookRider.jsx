@@ -8,6 +8,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+import BASE_API from "../services/axios";
+import { useAuth } from "../context/user";
 
 const style = {
   position: "absolute",
@@ -26,18 +28,47 @@ const BookRider = ({
   open = true,
   handleClose = () => {},
   pricing = 10000,
+  riderToBook,
+  searchPath,
 }) => {
-  const [numPeople, setNumPeople] = useState(1); // State to hold number of people
-  const [numMonths, setNumMonths] = useState(1); // State to hold number of people
+  const { user } = useAuth();
+  const [numPeople, setNumPeople] = useState(1);
+  const [numMonths, setNumMonths] = useState(1);
 
   const totalPricing = (numPeople * numMonths * pricing).toFixed(2);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // You can process the number of people here
     alert(
       `You have booked a ride for ${numPeople} people. with a duration of ${numMonths} which will be costed around ${totalPricing}`
     );
     handleClose(); // Close the modal after submission
+
+    try {
+      const startDate = new Date();
+      const endDate = new Date(startDate);
+      endDate.setMonth(startDate.getMonth() + numMonths);
+
+      const bookingData = {
+        userId: user._id,
+        riderId: riderToBook._id,
+        pricing: totalPricing,
+        startDate,
+        endDate,
+        numberOfPeople: numPeople,
+        location: searchPath.location,
+        school: searchPath.school,
+      };
+      const response = await BASE_API.post(
+        `/api/bookings/booking-rider`,
+        bookingData
+      );
+      if (response.status === 201) {
+        alert("Booking Successfully");
+      }
+    } catch (error) {
+      console.error("Error fetching riders", error);
+    }
   };
   return (
     <Box>

@@ -9,16 +9,17 @@ const PORT = process.env.PORT || 5000;
 
 const authRoutes = require("./routes/auth");
 const RiderRoutes = require("./routes/rider");
+const BookingRoutes = require("./routes/booking");
 
 // Middleware
 const corsOptions = {
   origin: [
-    "http://localhost:5173",  // Adjust port if needed
-    "http://localhost:5174",  // Adjust port if needed
+    "http://localhost:5173", 
+    "http://localhost:5174", 
     "https://schoolway.netlify.app"
   ],
-  methods: "GET,POST,PUT,DELETE",  // You can adjust allowed HTTP methods
-  credentials: true,  // Allow cookies and credentials (if needed)
+  methods: "GET,POST,PUT,DELETE",  
+  credentials: true,  
 };
 
 app.use(cors(corsOptions));
@@ -42,6 +43,7 @@ app.get("/", (req, res) => {
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/riders", RiderRoutes);
+app.use("/api/bookings", BookingRoutes);
 
 // Start Server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

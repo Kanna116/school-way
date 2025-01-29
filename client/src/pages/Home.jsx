@@ -9,6 +9,18 @@ const HomePage = () => {
   const [riders, setRiders] = useState([]);
   const { user } = useAuth();
 
+  const [searchPath, setSearchPath] = useState({
+    location: "",
+    school: "",
+  });
+
+  const handleSearchPathChange = (key, value) => {
+    setSearchPath((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
   return (
     <Box
       sx={{
@@ -26,9 +38,13 @@ const HomePage = () => {
             height: "100%",
           }}
         >
-          <RiderFinder setRiders={setRiders} />
+          <RiderFinder
+            setRiders={setRiders}
+            searchPath={searchPath}
+            handleSearchPathChange={handleSearchPathChange}
+          />
           {riders.length > 0 ? (
-            <RidersList riders={riders} />
+            <RidersList riders={riders} searchPath={searchPath} />
           ) : (
             <div style={{ width: "50%", height: "90vh" }}>
               <CardMedia

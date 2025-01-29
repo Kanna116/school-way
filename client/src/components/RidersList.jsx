@@ -3,9 +3,11 @@ import { Avatar, Box, Button, Card, Chip, Typography } from "@mui/material";
 import BookRider from "./BookRider";
 import { useState } from "react";
 
-const RidersList = ({ riders }) => {
+const RidersList = ({ riders, searchPath }) => {
   const [pricing, setPricing] = useState(0);
   const [open, setOpen] = useState(false);
+  const [riderToBook, setRiderToBook] = useState({});
+
   return (
     <Box
       sx={{
@@ -66,6 +68,7 @@ const RidersList = ({ riders }) => {
                 size="small"
                 onClick={() => {
                   setPricing(priceValue);
+                  setRiderToBook(rider);
                   setOpen(true);
                 }}
               >
@@ -75,10 +78,13 @@ const RidersList = ({ riders }) => {
           </Card>
         );
       })}
+
       <BookRider
         open={open}
         handleClose={() => setOpen(false)}
         pricing={pricing}
+        riderToBook={riderToBook}
+        searchPath={searchPath}
       />
     </Box>
   );

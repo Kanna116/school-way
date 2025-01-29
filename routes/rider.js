@@ -9,8 +9,6 @@ router.get("/riders", async (req, res) => {
     return res.status(400).send("School and Location are required parameters.");
   }
 
-  console.log("Searching for riders with school:", school, "and location:", location);
-
   try {
     const riders = await Rider.find({
       possibleSchools: { $in: [school] },
@@ -18,11 +16,10 @@ router.get("/riders", async (req, res) => {
       isVerified: true,
     });
 
-    // Debugging: Log the number of riders found
-    console.log("Number of riders found:", riders.length);
-
     if (riders.length === 0) {
-      return res.status(404).send("No riders found for the specified school and location.");
+      return res
+        .status(404)
+        .send("No riders found for the specified school and location.");
     }
 
     res.json({ riders });

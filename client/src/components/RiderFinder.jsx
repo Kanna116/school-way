@@ -1,12 +1,13 @@
+/* eslint-disable react/prop-types */
 import { Box, Button, FormControl, TextField } from "@mui/material";
 import { useState } from "react";
 import BASE_API from "../services/axios";
 
 // eslint-disable-next-line react/prop-types
-const RiderFinder = ({ setRiders }) => {
-  const [school, setSchool] = useState("");
-  const [location, setLocation] = useState("");
+const RiderFinder = ({ setRiders, searchPath, handleSearchPathChange }) => {
   const [ridersNotFound, setRidersNotFound] = useState(false);
+
+  const { school, location } = searchPath;
 
   const handleSearch = async () => {
     if (!school || !location) {
@@ -18,11 +19,9 @@ const RiderFinder = ({ setRiders }) => {
       const response = await BASE_API.get(
         `/api/riders/riders?school=${school}&location=${location}`
       );
-      console.log(response);
-      console.log(response.status);
       if (response.status === 404) {
         setRidersNotFound(true);
-        return ;
+        return;
       }
       setRiders(response.data.riders);
       setRidersNotFound(false);
@@ -56,14 +55,14 @@ const RiderFinder = ({ setRiders }) => {
           label="Pickup"
           size="small"
           value={location}
-          onChange={(e) => setLocation(e.target.value)}
+          onChange={(e) => handleSearchPathChange("location", e.target.value)}
           required
         />
         <TextField
           label="School"
           size="small"
           value={school}
-          onChange={(e) => setSchool(e.target.value)}
+          onChange={(e) => handleSearchPathChange("school", e.target.value)}
           required
         />
         <Button
