@@ -50,7 +50,7 @@ function Navbar() {
       sx={{
         bgcolor: "white",
         boxShadow: "none",
-        borderBottom: "1px solid #000",
+        borderBottom: "1px solid #00000040",
         zIndex: "100",
       }}
     >

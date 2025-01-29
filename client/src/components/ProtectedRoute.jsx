@@ -15,7 +15,7 @@ const ProtectedRoute = ({ component: Component }) => {
       <div className="protected-page">
         <Component />
       </div>
-      <Footer />;
+      <Footer />
     </>
   );
 };

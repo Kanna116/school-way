@@ -14,7 +14,7 @@ const HomePage = () => {
       sx={{
         width: "100%",
         minHeight: "90vh",
-        height: "80vh",
+        height: "fit-content",
       }}
     >
       {user?.role === "rider" ? (
@@ -30,7 +30,7 @@ const HomePage = () => {
           {riders.length > 0 ? (
             <RidersList riders={riders} />
           ) : (
-            <div style={{ width: "50%" }}>
+            <div style={{ width: "50%", height: "90vh" }}>
               <CardMedia
                 component="img"
                 height="100%"

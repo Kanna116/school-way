@@ -8,7 +8,7 @@ const Footer = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        backgroundColor: "#white",
+        backgroundColor: "white",
         color: "#000",
         padding: "10px 20px",
         // boxShadow:
