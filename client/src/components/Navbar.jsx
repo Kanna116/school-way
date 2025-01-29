@@ -146,9 +146,9 @@ function Navbar() {
                 onClick={handleOpenUserMenu}
                 sx={{ p: 0, bgcolor: "#e89f40" }}
               >
-                {user.role === "rider" ? (
+                {user?.role === "rider" ? (
                   <Avatar
-                    alt={user.username}
+                    alt={user?.username}
                     src={
                       user.riderData?.image
                         ? user.riderData?.image
@@ -158,9 +158,9 @@ function Navbar() {
                   />
                 ) : (
                   <Avatar
-                    alt={user.username}
+                    alt={user?.username}
                     src={
-                      user.image ? user.image : "/static/images/avatar/2.png"
+                      user?.image ? user.image : "/static/images/avatar/2.png"
                     }
                     sx={{ bgcolor: "#e89f40" }}
                   />
@@ -190,6 +190,15 @@ function Navbar() {
               >
                 <MenuItem>
                   <Typography sx={{ textAlign: "center" }}>Profile</Typography>
+                </MenuItem>
+              </Link>
+              <Link
+                to="/bookings"
+                style={{ all: "unset" }}
+                onClick={handleCloseUserMenu}
+              >
+                <MenuItem>
+                  <Typography sx={{ textAlign: "center" }}>Bookings</Typography>
                 </MenuItem>
               </Link>
               <MenuItem

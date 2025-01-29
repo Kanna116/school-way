@@ -55,4 +55,41 @@ router.post("/booking-rider", async (req, res) => {
   }
 });
 
+router.get("/get-current-bookings/:id", async (req, res) => {
+  const { id } = req.params; // the id is either a userId or riderId depending on the query
+  const { role } = req.query; // assuming you pass the 'role' in the query to specify if it's a user or rider
+
+  if (!role || (role !== "user" && role !== "rider")) {
+    return res.status(400).send("Role must be either 'user' or 'rider'.");
+  }
+
+  try {
+    let bookings;
+
+    if (role === "user") {
+      // Fetch all bookings for a specific user
+      bookings = await Booking.find({ user: id, status: "completed" }) // Exclude completed bookings
+        .populate("rider", "username school locationsCovered") // You can populate additional rider details as needed
+        .populate("user", "username email"); // Optionally populate user details
+    } else if (role === "rider") {
+      // Fetch all bookings for a specific rider
+      bookings = await Booking.find({
+        rider: id,
+        status: "completed",
+      })
+        .populate("rider", "username school locationsCovered")
+        .populate("user", "username email");
+    }
+
+    if (!bookings || bookings.length === 0) {
+      return res.status(404).send("No current bookings found.");
+    }
+
+    res.json({ bookings });
+  } catch (error) {
+    console.error("Error fetching bookings:", error);
+    res.status(500).send("Error fetching bookings.");
+  }
+});
+
 module.exports = router;

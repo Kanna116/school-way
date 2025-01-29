@@ -17,7 +17,9 @@ export const useAuth = () => {
 // eslint-disable-next-line react/prop-types
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null); // To store user data
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false); // To track login status
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(
+    Boolean(localStorage.getItem("isUserLoggedIn"))
+  ); // To track login status
 
   useEffect(() => {
     const savedUser = JSON.parse(localStorage.getItem("user"));
@@ -31,11 +33,11 @@ export const UserProvider = ({ children }) => {
   const login = async (userData) => {
     try {
       const res = await BASE_API.post("/api/auth/login", userData);
-      setUser(userData);
+      setUser(res.data.user);
       setIsUserLoggedIn(true);
       localStorage.setItem("user", JSON.stringify(res.data.user)); // Store user data in localStorage
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("userRole", res.data.role);
+      localStorage.setItem("isUserLoggedIn", true);
     } catch (err) {
       throw new Error(err.response?.data?.message || "Invalid credentials");
     }
@@ -46,7 +48,7 @@ export const UserProvider = ({ children }) => {
     setIsUserLoggedIn(false);
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-    localStorage.removeItem("userRole");
+    localStorage.removeItem("isUserLoggedIn");
   };
 
   const updateUser = async (formData) => {
