@@ -11,13 +11,12 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "./Logo";
 import { useState } from "react";
 import { useAuth } from "../context/user";
 
 const pages = ["Track", "Bookings"];
-const settings = ["Profile"];
 
 function Navbar() {
   const navigate = useNavigate();
@@ -139,11 +138,25 @@ function Navbar() {
                 onClick={handleOpenUserMenu}
                 sx={{ p: 0, bgcolor: "#e89f40" }}
               >
-                <Avatar
-                  alt={user.username}
-                  src="/static/images/avatar/2.png"
-                  sx={{ bgcolor: "#e89f40" }}
-                />
+                {user.role === "rider" ? (
+                  <Avatar
+                    alt={user.username}
+                    src={
+                      user.riderData?.image
+                        ? user.riderData?.image
+                        : "/static/images/avatar/2.png"
+                    }
+                    sx={{ bgcolor: "#e89f40" }}
+                  />
+                ) : (
+                  <Avatar
+                    alt={user.username}
+                    src={
+                      user.image ? user.image : "/static/images/avatar/2.png"
+                    }
+                    sx={{ bgcolor: "#e89f40" }}
+                  />
+                )}
               </IconButton>
             </Tooltip>
             <Menu
@@ -162,13 +175,11 @@ function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: "center" }}>
-                    {setting}
-                  </Typography>
+              <Link to="/profile" style={{ all: "unset" }}>
+                <MenuItem>
+                  <Typography sx={{ textAlign: "center" }}>Profile</Typography>
                 </MenuItem>
-              ))}
+              </Link>
               <MenuItem onClick={handleLogout}>
                 <Typography sx={{ textAlign: "center" }}>Log out</Typography>
               </MenuItem>

@@ -1,7 +1,5 @@
 import { Box, CardMedia } from "@mui/material";
 import { useState } from "react";
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 import RiderFinder from "../components/RiderFinder";
 import RidersList from "../components/RidersList";
 import { useAuth } from "../context/user";
@@ -13,7 +11,6 @@ const HomePage = () => {
 
   return (
     <div>
-      <Navbar />
       <Box
         sx={{
           width: "100%",
@@ -49,7 +46,6 @@ const HomePage = () => {
           </Box>
         )}
       </Box>
-      <Footer />
     </div>
   );
 };

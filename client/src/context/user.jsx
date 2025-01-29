@@ -49,8 +49,28 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem("userRole");
   };
 
+  const updateUser = async (formData) => {
+    console.log(user);
+    try {
+      const response = await BASE_API.post(
+        `/api/auth/update/${user._id}`,
+        formData
+      );
+
+      if (response.ok) {
+        setUser({ ...user, ...response.data.updateUser });
+      }
+    } catch (err) {
+      throw new Error(
+        err.response?.data?.message || "Failed to Update the user"
+      );
+    }
+  };
+
   return (
-    <UserContext.Provider value={{ user, isUserLoggedIn, login, logout }}>
+    <UserContext.Provider
+      value={{ user, isUserLoggedIn, login, logout, updateUser }}
+    >
       {children}
     </UserContext.Provider>
   );

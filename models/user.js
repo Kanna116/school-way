@@ -6,6 +6,10 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, enum: ["rider", "user"], required: true },
+  image: {
+    type: String,
+    default: "https://cdn-icons-png.flaticon.com/256/4825/4825123.png",
+  },
 });
 
 // Hash password before saving
