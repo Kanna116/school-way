@@ -11,7 +11,17 @@ const authRoutes = require("./routes/auth");
 const RiderRoutes = require("./routes/rider");
 
 // Middleware
-app.use(cors());
+const corsOptions = {
+  origin: [
+    "http://localhost:5173",  // Adjust port if needed
+    "http://localhost:5174",  // Adjust port if needed
+    "https://schoolway.netlify.app"
+  ],
+  methods: "GET,POST,PUT,DELETE",  // You can adjust allowed HTTP methods
+  credentials: true,  // Allow cookies and credentials (if needed)
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
