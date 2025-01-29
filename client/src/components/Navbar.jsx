@@ -1,20 +1,19 @@
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
+import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import Toolbar from "@mui/material/Toolbar";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 
-import { Link, useNavigate } from "react-router-dom";
-import Logo from "./Logo";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/user";
+import Logo from "./Logo";
 
 const pages = ["Track", "Bookings"];
 
@@ -125,20 +124,34 @@ function Navbar() {
               display: {
                 xs: "none",
                 md: "flex",
-                justifyContent: "center",
+                justifyContent: "flex-end",
                 gap: "10px",
+                marginRight: "20px",
               },
             }}
           >
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
+            <Link
+              to="/home"
+              style={{ all: "unset" }}
+              onClick={handleCloseUserMenu}
+            >
+              <MenuItem>
+                <Typography sx={{ textAlign: "center", color: "black" }}>
+                  Home
+                </Typography>
+              </MenuItem>
+            </Link>
+            <Link
+              to="/bookings"
+              style={{ all: "unset" }}
+              onClick={handleCloseUserMenu}
+            >
+              <MenuItem>
+                <Typography sx={{ textAlign: "center", color: "black" }}>
+                  Bookings
+                </Typography>
+              </MenuItem>
+            </Link>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
@@ -192,15 +205,7 @@ function Navbar() {
                   <Typography sx={{ textAlign: "center" }}>Profile</Typography>
                 </MenuItem>
               </Link>
-              <Link
-                to="/bookings"
-                style={{ all: "unset" }}
-                onClick={handleCloseUserMenu}
-              >
-                <MenuItem>
-                  <Typography sx={{ textAlign: "center" }}>Bookings</Typography>
-                </MenuItem>
-              </Link>
+
               <MenuItem
                 onClick={() => {
                   handleLogout();
