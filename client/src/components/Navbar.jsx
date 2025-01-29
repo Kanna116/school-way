@@ -175,12 +175,21 @@ function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <Link to="/profile" style={{ all: "unset" }}>
+              <Link
+                to="/profile"
+                style={{ all: "unset" }}
+                onClick={handleCloseUserMenu}
+              >
                 <MenuItem>
                   <Typography sx={{ textAlign: "center" }}>Profile</Typography>
                 </MenuItem>
               </Link>
-              <MenuItem onClick={handleLogout}>
+              <MenuItem
+                onClick={() => {
+                  handleLogout();
+                  handleCloseUserMenu();
+                }}
+              >
                 <Typography sx={{ textAlign: "center" }}>Log out</Typography>
               </MenuItem>
             </Menu>
